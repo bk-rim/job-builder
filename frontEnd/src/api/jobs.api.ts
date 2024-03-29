@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Jobs } from '@/utils/type'
+import { formatDate } from '@/utils/formatDate'
 
 export type JobsResponse = {
     jobs: Jobs[]
@@ -18,9 +19,17 @@ export const fetchJobs = async () => {
     }
 
     const data = await res.json()
-    const jobs = data.filter((job: Jobs) => job.executed_on === null)
+    const jobs = data.filter((job: Jobs) => job.executed_on === null).map((job: Jobs) => {
+        job.created_on = formatDate(job.created_on)
+        return job
 
-    const executions = data.filter((job: Jobs) => job.executed_on !== null)
+    })
+
+    const executions = data.filter((job: Jobs) => job.executed_on !== null).map((job: Jobs) => {
+        job.created_on = formatDate(job.created_on)
+        job.executed_on = formatDate(job.executed_on ?? "")
+        return job
+    })
 
     const jobsResponse: JobsResponse = {jobs, executions}
 
