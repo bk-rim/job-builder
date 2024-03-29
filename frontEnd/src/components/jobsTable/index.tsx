@@ -18,6 +18,7 @@ import {
 import { Jobs } from "../../utils/type"
 import { executeJob } from "../../api/jobs.api"
 import { notify } from "../../utils/notification"
+import { formatDate } from "../../utils/formatDate"
 
 const getColumns= (executeFn: (job: Jobs) => any, onTabChange: (tab: string) => void ): ColumnDef<Jobs>[] => ([
   
@@ -36,7 +37,7 @@ const getColumns= (executeFn: (job: Jobs) => any, onTabChange: (tab: string) => 
   {
     accessorKey: "created_on",
     header: () => <div className="text-left">Created_on</div>,
-    cell: ({ row }) => <div className="text-left text-gray-400 font-medium">{row.getValue("created_on")}</div>
+    cell: ({ row }) => <div className="text-left text-gray-400 font-medium">{formatDate(row.getValue("created_on"))}</div>
     
   },
   {

@@ -19,7 +19,7 @@ import { Jobs } from "../../utils/type"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteJob } from "../../api/jobs.api"
 import { notify } from "../../utils/notification"
-
+import { formatDate } from "../../utils/formatDate"
 import 'react-toastify/dist/ReactToastify.css';
 import { CircleAlert, CircleCheck, CircleX, Loader } from "lucide-react"
 
@@ -36,7 +36,7 @@ const getColumns = (deleteFn: (id: string) => any): ColumnDef<Jobs>[] => ([
   {
     accessorKey: "executed_on",
     header: () => <div className="text-left">Date</div>,
-    cell: ({ row }) => <div className="text-left font-medium text-gray-400">{row.getValue("executed_on")}</div>,
+    cell: ({ row }) => <div className="text-left font-medium text-gray-400">{formatDate(row.getValue("executed_on"))}</div>,
   },
   {
     accessorKey: "status",
