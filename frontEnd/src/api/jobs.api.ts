@@ -18,15 +18,9 @@ export const fetchJobs = async () => {
     }
 
     const data = await res.json()
-    const jobs = data.filter((job: Jobs) => {
-      job.executed_on === null
-      return job
-    })
+    const jobs = data.filter((job: Jobs) => job.executed_on === null)
 
-    const executions = data.filter((job: Jobs) =>{
-      job.executed_on !== null
-      return job
-    })
+    const executions = data.filter((job: Jobs) => job.executed_on !== null)
 
     const jobsResponse: JobsResponse = {jobs, executions}
 
