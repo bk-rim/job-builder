@@ -1,0 +1,59 @@
+version: '3.8'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  job-service:
+    build:
+      context: ./job-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DOCKER_ENV=true
+    networks:
+      - backend
+
+  job-processor:
+    build:
+      context: ./job-processor
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - DOCKER_ENV=true
+    networks:
+      - backend
+  frontend:
+    build:
+      context: ./frontEnd
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - DOCKER_ENV=true
+    networks:
+      - backend
+
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=karim
+      - POSTGRES_PASSWORD=karim
+      - POSTGRES_DB=godb
+    networks:
+      - backend
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+
+
