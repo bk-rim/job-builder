@@ -1,11 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { Jobs } from '@/utils/type'
+import { Jobs, JobsResponse } from '@/utils/type'
 import { formatDate } from '@/utils/formatDate'
 
-export type JobsResponse = {
-    jobs: Jobs[]
-    executions: Jobs[]
-}
+
 export const fetchJobs = async () => {
     const res = await fetch("http://localhost:8080/jobs",{
       method: "GET",

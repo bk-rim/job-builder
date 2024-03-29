@@ -8,3 +8,8 @@ export type Jobs = {
     status?: string | null
     webhook_slack?: string | null
 }
+
+export type JobsResponse = {
+    jobs: Jobs[]
+    executions: Jobs[]
+}
