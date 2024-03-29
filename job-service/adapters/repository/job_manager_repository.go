@@ -19,7 +19,8 @@ func NewPostgresRepository(db *sql.DB) *PostgresRepository {
 
 func (r *PostgresRepository) Create(job *domain.Job) (domain.Job, error) {
 	var id int64
-	err := r.db.QueryRow("INSERT INTO jobs (name, type, frequency, created_on, status, executed_on, webhook_slack) VALUES ($1, $2, $3, TO_TIMESTAMP($4, 'YYYY-MM-DD\"T\"HH24:MI:SSZ'), $5, $6, $7) RETURNING id",
+
+	err := r.db.QueryRow("INSERT INTO jobs (name, type, frequency, created_on, status, executed_on, webhook_slack) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
 		job.Name, job.Type, job.Frequency, job.CreatedOn, job.Status, job.ExecutedOn, job.WebhookSlack).Scan(&id)
 	if err != nil {
 		return domain.Job{}, fmt.Errorf("error creating job: %w", err)
