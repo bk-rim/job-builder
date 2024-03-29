@@ -30,28 +30,26 @@ func (wss *WebSocketServer) HandleWebSocket(c *gin.Context) {
 	}
 	defer ws.Close()
 
-	// Register new client
 	wss.clients[ws] = true
 
 	for {
 		var msg BroadcastMessage
-		// Read in a new message as JSON and map it to a Message object
+
 		err := ws.ReadJSON(&msg)
 		if err != nil {
 			fmt.Printf("error: %v", err)
 			delete(wss.clients, ws)
 			break
 		}
-		// Send the newly received message to the broadcast channel
+
 		wss.broadcast <- msg
 	}
 }
 
 func (wss *WebSocketServer) BroadcastMessage() {
 	for {
-		// Grab the next message from the broadcast channel
 		msg := <-wss.broadcast
-		// Send it out to every client currently connected
+
 		for client := range wss.clients {
 			err := client.WriteJSON(msg)
 			if err != nil {
