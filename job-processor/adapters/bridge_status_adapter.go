@@ -93,7 +93,7 @@ func (a *BridgeStatusAPIAdapter) ProcessBridgeStatus(data string) (string, error
 	}
 
 	if len(filteredResults) == 0 {
-		return "le pont Chaban Delmas restera fermé dans les 5 prochains jours", nil
+		return "le pont Chaban Delmas restera ouvert dans les 5 prochains jours", nil
 	}
 
 	for _, passage := range filteredResults {
